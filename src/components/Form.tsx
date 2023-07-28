@@ -5,7 +5,6 @@ const Form = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const numberRef = useRef<HTMLInputElement>(null);
 
-  const person = { name: "", amount: 0, family: false, friends: false };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (nameRef.current !== null) console.log(nameRef.current.value);
@@ -42,7 +41,7 @@ const Form = () => {
           />
           <label htmlFor='number'>Počet</label>
         </div>
-        <div className='pt-4'>
+        <div className='pt-4 ms-2'>
           <div className='form-check pb-2'>
             <input
               className='form-check-input'
@@ -73,15 +72,7 @@ const Form = () => {
           </div>
         </div>
 
-        <select
-          className='form-select mt-3 mb-3 p-2'
-          aria-label='Default select example'
-        >
-          <option defaultValue={0}>Z jaké strany?</option>
-          <option value='1'>Hanička</option>
-          <option value='2'>Tom</option>
-        </select>
-        <div className='form-check mt-3'>
+        <div className='form-check mt-3 ms-2'>
           <input
             className='form-check-input'
             type='checkbox'

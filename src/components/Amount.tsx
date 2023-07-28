@@ -1,57 +1,43 @@
 import { useState } from "react";
+import ListTable from "./list/ListTable";
 
 const Amount = () => {
-  const person = [
+  const [person, setPerson] = useState([
     {
       id: 1,
       name: "Novákovic Pepík",
-      number: 2,
-      side: "H",
-      family: true,
-      sleep: false,
+      amount: 2,
+      family: false,
+      sleep: true,
     },
     {
       id: 2,
-      name: "Novákovic Pepík",
-      number: 2,
-      side: "H",
+      name: "Novákovic franmta",
+      amount: 2,
       family: true,
-      sleep: false,
+      sleep: true,
     },
     {
       id: 3,
-      name: "Novákovic Pepík",
-      number: 2,
-      side: "H",
+      name: "Nováaw a",
+      amount: 2,
       family: true,
       sleep: false,
     },
-  ];
-  // const total = person.reduce((acc, number) => acc + number.value, 0);
-  const [number, setNumber] = useState(2);
+  ]);
+
   return (
     <>
       <div className='d-flex justify-content-end gap-3'>
         <p className='h1'>Celkový počet:</p>
-        <p className='h1'>{number}</p>
+        <p className='h1'>
+          {person.reduce((acc, person) => person.amount + acc, 0)}
+        </p>
       </div>
-      <table className='table table-bordered'>
-        <tr>
-          <th scope='col'>Jméno</th>
-          <th scope='col'>Počet</th>
-          <th scope='col'>R/K</th>
-          <th scope='col'>Spaní</th>
-        </tr>
-        {person.map(({ id, name, side, number, sleep }) => (
-          <tr key={id}>
-            <td>{name}</td>
-            <td>{number}</td>
-            <td>{side}</td>
-            <td>{sleep}</td>
-            <button className='btn btn-primary'>Smazat</button>
-          </tr>
-        ))}
-      </table>
+      <ListTable
+        summ={person}
+        onDelete={(id) => setPerson(person.filter((e) => e.id !== id))}
+      />
     </>
   );
 };
