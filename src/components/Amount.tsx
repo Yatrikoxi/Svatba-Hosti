@@ -3,7 +3,6 @@ import ListTable from "./list/ListTable";
 import ListFilter from "./list/ListFilter";
 
 const Amount = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [person, setPerson] = useState([
     {
       id: 1,
@@ -17,7 +16,7 @@ const Amount = () => {
       name: "Novákovic franmta",
       amount: 2,
       option: "friends",
-      sleep: "no",
+      sleep: "",
     },
     {
       id: 3,
@@ -27,13 +26,12 @@ const Amount = () => {
       sleep: "yes",
     },
   ]);
-
+  const [selectedCategory, setSelectedCategory] = useState("");
   const visibleChoice = selectedCategory
     ? person.filter(
         (e) => e.option === selectedCategory || e.sleep === selectedCategory
       )
     : person;
-
   return (
     <>
       <div className='d-flex justify-content-end gap-3'>

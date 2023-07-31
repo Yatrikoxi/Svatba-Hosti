@@ -3,7 +3,7 @@ interface Individual {
   name: string;
   amount: number;
   option: string;
-  sleep: string;
+  sleep?: string;
 }
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
 }
 
 const ListTable = ({ summ, onDelete }: Props) => {
+  if (summ.length === 0)
+    return <p className='h1 text-danger'>Zatím není nikdo pozván.</p>;
   return (
     <table className='table table-bordered'>
       <thead className='table-dark'>

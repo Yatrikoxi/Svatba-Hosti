@@ -7,7 +7,7 @@ function App() {
       <div className='container vh-100 d-flex mx-auto bg-light'>
         <div className='row h-100 w-100'>
           <div className='col-3 bg-secondary-subtle'>
-            <Form />
+            <Form onSubmit={(newPerson) => console.log(newPerson)} />
           </div>
           <div className='col-9 mt-5'>
             <Amount />
