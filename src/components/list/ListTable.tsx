@@ -1,6 +1,7 @@
 interface Individual {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   amount: number;
   option: string;
   sleep?: string;
@@ -28,7 +29,9 @@ const ListTable = ({ summ, onDelete }: Props) => {
       <tbody>
         {summ.map((indiv) => (
           <tr key={indiv.id}>
-            <td className='w-50'>{indiv.name}</td>
+            <td className='w-50'>
+              {indiv.firstName} {indiv.lastName}
+            </td>
             <td className='w-auto'>{indiv.amount}</td>
             <td className='w-auto'>{indiv.option === "family" ? "R" : "K"}</td>
             <td className='w-auto'>{indiv.sleep === "yes" ? "Ano" : "Ne"}</td>

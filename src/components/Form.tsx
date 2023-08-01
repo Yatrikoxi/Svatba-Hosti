@@ -4,11 +4,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const schema = z.object({
-  id: z.number().min(1).max(150),
-  name: z.string().min(1, { message: "Ale no tak. Přece má jméno." }).max(25),
-  amount: z.number({ invalid_type_error: "Alespoň jeden!" }).min(1).max(10),
-  option: z.union([z.enum(["family", "friends"]), z.null()]).nullable(),
-  sleep: z.union([z.enum(["yes", "no"]), z.null()]).nullable(),
+  firstName: z
+    .string()
+    .min(3, { message: "Ale no tak. Přece má delší jméno." })
+    .max(15)
+    .regex(new RegExp(/^[a-zA-Z0-9À-ž]+$/), "Tady používáme pouze písmena"),
+  lastName: z
+    .string()
+    .min(3, { message: "Ale no tak. Přece má delší příjmení." })
+    .max(15)
+    .regex(new RegExp(/^[a-zA-Z0-9À-ž]+$/), "Tady používáme pouze písmena"),
+  amount: z
+    .number({ invalid_type_error: "Alespoň jeden!" })
+    .min(1)
+    .max(10, { message: "Deset by stačilo ne?" }),
+  option: z.enum(["family", "friends"]),
+  sleep: z.enum(["yes", "no"]),
 });
 
 type PersonFormData = z.infer<typeof schema>;
@@ -22,6 +33,7 @@ const Form = ({ onSubmit }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    // reset,
   } = useForm<PersonFormData>({ resolver: zodResolver(schema) });
 
   return (
@@ -37,14 +49,29 @@ const Form = ({ onSubmit }: Props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-1 form-floating'>
           <input
-            {...register("name")}
+            {...register("firstName")}
             id='name'
             type='text'
             className='form-control'
             placeholder='Jméno'
           />
-          {errors.name && <p className='text-danger'>{errors.name.message}</p>}
+          {errors.firstName && (
+            <p className='text-danger'>{errors.firstName.message}</p>
+          )}
           <label htmlFor='name'>Jméno</label>
+        </div>
+        <div className='mb-1 form-floating'>
+          <input
+            {...register("lastName")}
+            id='name'
+            type='text'
+            className='form-control'
+            placeholder='Příjmení'
+          />
+          {errors.lastName && (
+            <p className='text-danger'>{errors.lastName.message}</p>
+          )}
+          <label htmlFor='name'>Příjmení</label>
         </div>
         <div className='form-floating'>
           <input
@@ -63,9 +90,8 @@ const Form = ({ onSubmit }: Props) => {
           <div className='form-check pb-2'>
             <input
               className='form-check-input'
-              type='radio'
               {...register("option")}
-              name='flexRadioDefault'
+              type='radio'
               value='family'
               id='family'
             />
@@ -82,7 +108,6 @@ const Form = ({ onSubmit }: Props) => {
               {...register("option")}
               type='radio'
               value='friends'
-              name='flexRadioDefault'
               id='friends'
             />
             <label
@@ -93,22 +118,40 @@ const Form = ({ onSubmit }: Props) => {
             </label>
           </div>
         </div>
-
-        <div className='form-check mt-3 ms-2'>
-          <input
-            className='form-check-input'
-            type='checkbox'
-            value='yes'
-            id='defaultCheck1'
-            {...register("sleep")}
-          />
-          <label
-            className='form-check-label'
-            htmlFor='defaultCheck1'
-          >
-            Přespání
-          </label>
+        <div className='pt-4 ms-2'>
+          <p className=''>Přespání?</p>
+          <div className='form-check pb-2'>
+            <input
+              className='form-check-input'
+              {...register("sleep")}
+              type='radio'
+              value='yes'
+              id='yes'
+            />
+            <label
+              className='form-check-label'
+              htmlFor='yes'
+            >
+              Ano
+            </label>
+          </div>
+          <div className='form-check'>
+            <input
+              className='form-check-input'
+              {...register("sleep")}
+              type='radio'
+              value='no'
+              id='no'
+            />
+            <label
+              className='form-check-label'
+              htmlFor='no'
+            >
+              Ne
+            </label>
+          </div>
         </div>
+
         <button
           className='btn btn-primary mt-4'
           type='submit'
