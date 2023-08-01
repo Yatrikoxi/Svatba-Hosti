@@ -33,7 +33,7 @@ const Form = ({ onSubmit }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
+    reset,
   } = useForm<PersonFormData>({ resolver: zodResolver(schema) });
 
   return (
@@ -46,7 +46,12 @@ const Form = ({ onSubmit }: Props) => {
         />
       </div>
       <p className='m-0 pt-2 pb-2 text-secondary'>Tak koho si tam pozveme?</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onSubmit(data);
+          reset();
+        })}
+      >
         <div className='mb-1 form-floating'>
           <input
             {...register("firstName")}

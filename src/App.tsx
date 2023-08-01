@@ -6,6 +6,7 @@ import { useState } from "react";
 function App() {
   const [person, setPerson] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+
   const visibleChoice = selectedCategory
     ? person.filter(
         (e) => e.option === selectedCategory || e.sleep === selectedCategory
