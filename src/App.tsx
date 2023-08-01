@@ -4,7 +4,16 @@ import Form from "./components/Form";
 import { useState } from "react";
 
 function App() {
-  const [person, setPerson] = useState([]);
+  const [person, setPerson] = useState([
+    {
+      id: 0,
+      firstName: "První",
+      lastName: "host",
+      amount: 1,
+      option: "family",
+      sleep: "yes",
+    },
+  ]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const visibleChoice = selectedCategory
