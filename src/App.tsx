@@ -2,6 +2,7 @@ import ListFilter from "./components/list/ListFilter";
 import ListTable from "./components/list/ListTable";
 import Form from "./components/Form";
 import { useState } from "react";
+import ListSearch from "./components/list/ListSearch";
 
 function App() {
   const [person, setPerson] = useState([
@@ -15,12 +16,18 @@ function App() {
     },
   ]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchedPerson, setSearchedPerson] = useState("");
 
-  const visibleChoice = selectedCategory
-    ? person.filter(
-        (e) => e.option === selectedCategory || e.sleep === selectedCategory
-      )
-    : person;
+  const visibleChoice =
+    selectedCategory || searchedPerson
+      ? person.filter(
+          (e) =>
+            e.option === selectedCategory ||
+            e.sleep === selectedCategory ||
+            e.firstName === searchedPerson ||
+            e.lastName === searchedPerson
+        )
+      : person;
   return (
     <>
       <div className='container vh-100 d-flex mx-auto bg-light'>
@@ -39,9 +46,14 @@ function App() {
                 {visibleChoice.reduce((acc, person) => person.amount + acc, 0)}
               </p>
             </div>
-            <ListFilter
-              onSelectOption={(option) => setSelectedCategory(option)}
-            />
+            <div className='d-flex justify-content-between'>
+              <ListSearch
+                onSearchOption={(value) => setSearchedPerson(value)}
+              />
+              <ListFilter
+                onSelectOption={(option) => setSelectedCategory(option)}
+              />
+            </div>
             <ListTable
               summ={visibleChoice}
               onDelete={(id) => setPerson(person.filter((e) => e.id !== id))}
