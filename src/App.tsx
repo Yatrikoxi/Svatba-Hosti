@@ -92,16 +92,16 @@ function App() {
 
   return (
     <>
-      <div className='container vh-100 d-flex mx-auto bg-light'>
+      <div className='d-flex w-100 bg-light'>
         <div className='row h-100 w-100'>
-          <div className='col-3 bg-secondary-subtle'>
+          <div className='col-12 col-md bg-secondary-subtle'>
             <Form
               onSubmit={(data) =>
                 setPerson([...person, { ...data, id: person.length + 1 }])
               }
             />
           </div>
-          <div className='col-9 mt-5'>
+          <div className='col-12 col-md-10'>
             <div className='d-flex justify-content-end gap-3'>
               <p className='h1'>Celkový počet:</p>
               <p className='h1'>

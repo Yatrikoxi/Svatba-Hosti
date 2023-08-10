@@ -38,21 +38,21 @@ const Form = ({ onSubmit }: Props) => {
 
   return (
     <>
-      <div className='d-flex mt-4 justify-content-around'>
+      <div className='d-flex p-4 justify-content-around'>
         <h1 className='mt-3'>Svatba</h1>
         <img
           src={image}
           alt='weding-icon'
         />
       </div>
-      <p className='m-0 pt-2 pb-2 text-secondary'>Tak koho si tam pozveme?</p>
+      <p className='ms-4 pt-2 pb-2 text-secondary'>Tak koho si tam pozveme?</p>
       <form
         onSubmit={handleSubmit((data) => {
           onSubmit(data);
           reset();
         })}
       >
-        <div className='mb-1 form-floating'>
+        <div className='mb-1 form-floating w-75 ms-4'>
           <input
             {...register("firstName")}
             id='name'
@@ -65,7 +65,7 @@ const Form = ({ onSubmit }: Props) => {
           )}
           <label htmlFor='name'>Jméno</label>
         </div>
-        <div className='mb-1 form-floating'>
+        <div className='mb-1 form-floating w-75 ms-4'>
           <input
             {...register("lastName")}
             id='name'
@@ -78,7 +78,7 @@ const Form = ({ onSubmit }: Props) => {
           )}
           <label htmlFor='name'>Příjmení</label>
         </div>
-        <div className='form-floating'>
+        <div className='form-floating w-75 ms-4'>
           <input
             {...register("amount", { valueAsNumber: true })}
             id='amount'
@@ -91,7 +91,7 @@ const Form = ({ onSubmit }: Props) => {
           )}
           <label htmlFor='amount'>Počet</label>
         </div>
-        <div className='pt-4 ms-2'>
+        <div className='pt-4 ms-4'>
           <div className='form-check pb-2'>
             <input
               className='form-check-input'
@@ -123,7 +123,7 @@ const Form = ({ onSubmit }: Props) => {
             </label>
           </div>
         </div>
-        <div className='pt-4 ms-2'>
+        <div className='pt-4 ms-4'>
           <p className=''>Přespání?</p>
           <div className='form-check pb-2'>
             <input
@@ -158,7 +158,7 @@ const Form = ({ onSubmit }: Props) => {
         </div>
 
         <button
-          className='btn btn-primary mt-4'
+          className='btn btn-primary mt-4 ms-4 mb-2'
           type='submit'
         >
           Přidat

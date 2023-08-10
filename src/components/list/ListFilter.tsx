@@ -5,7 +5,7 @@ interface Props {
 const ListFilter = ({ onSelectOption }: Props) => {
   return (
     <select
-      className='form-select w-25 mb-3'
+      className='form-select w-25 '
       onChange={(event) => onSelectOption(event.target.value)}
     >
       <option value=''>Výběr</option>
