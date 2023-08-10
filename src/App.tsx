@@ -18,6 +18,38 @@ function App() {
       option: "family",
       sleep: "yes",
     },
+    {
+      id: 1,
+      firstName: "První",
+      lastName: "host",
+      amount: 1,
+      option: "family",
+      sleep: "yes",
+    },
+    {
+      id: 2,
+      firstName: "Prví",
+      lastName: "host",
+      amount: 1,
+      option: "family",
+      sleep: "yes",
+    },
+    {
+      id: 3,
+      firstName: "Pvní",
+      lastName: "host",
+      amount: 1,
+      option: "family",
+      sleep: "yes",
+    },
+    {
+      id: 4,
+      firstName: "Prní",
+      lastName: "host",
+      amount: 1,
+      option: "family",
+      sleep: "yes",
+    },
   ]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,25 +62,31 @@ function App() {
       ? person
           .filter(
             (e) =>
-              e.option === selectedCategory ||
-              e.sleep === selectedCategory ||
-              removeDiacritics(e.firstName.toLowerCase()).includes(
-                searchTerm
-              ) ||
-              removeDiacritics(e.lastName.toLowerCase()).includes(searchTerm)
+              (!selectedCategory ||
+                e.option === selectedCategory ||
+                e.sleep === selectedCategory) &&
+              (!searchTerm ||
+                removeDiacritics(e.firstName.toLowerCase()).includes(
+                  searchTerm
+                ) ||
+                removeDiacritics(e.lastName.toLowerCase()).includes(searchTerm))
           )
           .sort((a, b) => {
-            const scoreA = [...searchTerm].filter((letter) =>
-              (
-                removeDiacritics(a.firstName) + removeDiacritics(a.lastName)
-              ).includes(letter)
-            ).length;
-            const scoreB = [...searchTerm].filter((letter) =>
-              (
-                removeDiacritics(b.firstName) + removeDiacritics(b.lastName)
-              ).includes(letter)
-            ).length;
-            return scoreB - scoreA;
+            if (searchTerm) {
+              const scoreA = [...searchTerm].filter((letter) =>
+                (
+                  removeDiacritics(a.firstName) + removeDiacritics(a.lastName)
+                ).includes(letter)
+              ).length;
+              const scoreB = [...searchTerm].filter((letter) =>
+                (
+                  removeDiacritics(b.firstName) + removeDiacritics(b.lastName)
+                ).includes(letter)
+              ).length;
+              return scoreB - scoreA;
+            } else {
+              return a.id - b.id;
+            }
           })
       : person;
 
