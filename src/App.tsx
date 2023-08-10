@@ -4,6 +4,10 @@ import Form from "./components/Form";
 import { useState } from "react";
 import ListSearch from "./components/list/ListSearch";
 
+function removeDiacritics(str: string) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function App() {
   const [person, setPerson] = useState([
     {
@@ -16,18 +20,38 @@ function App() {
     },
   ]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [searchedPerson, setSearchedPerson] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const updateSearchTerm = (term: string) => {
+    setSearchTerm(removeDiacritics(term.toLowerCase()));
+  };
 
   const visibleChoice =
-    selectedCategory || searchedPerson
-      ? person.filter(
-          (e) =>
-            e.option === selectedCategory ||
-            e.sleep === selectedCategory ||
-            e.firstName === searchedPerson ||
-            e.lastName === searchedPerson
-        )
+    selectedCategory || searchTerm
+      ? person
+          .filter(
+            (e) =>
+              e.option === selectedCategory ||
+              e.sleep === selectedCategory ||
+              removeDiacritics(e.firstName.toLowerCase()).includes(
+                searchTerm
+              ) ||
+              removeDiacritics(e.lastName.toLowerCase()).includes(searchTerm)
+          )
+          .sort((a, b) => {
+            const scoreA = [...searchTerm].filter((letter) =>
+              (
+                removeDiacritics(a.firstName) + removeDiacritics(a.lastName)
+              ).includes(letter)
+            ).length;
+            const scoreB = [...searchTerm].filter((letter) =>
+              (
+                removeDiacritics(b.firstName) + removeDiacritics(b.lastName)
+              ).includes(letter)
+            ).length;
+            return scoreB - scoreA;
+          })
       : person;
+
   return (
     <>
       <div className='container vh-100 d-flex mx-auto bg-light'>
@@ -46,10 +70,8 @@ function App() {
                 {visibleChoice.reduce((acc, person) => person.amount + acc, 0)}
               </p>
             </div>
-            <div className='d-flex justify-content-between'>
-              <ListSearch
-                onSearchOption={(value) => setSearchedPerson(value)}
-              />
+            <div className='d-flex justify-content-between mb-4'>
+              <ListSearch onSearchOption={updateSearchTerm} />
               <ListFilter
                 onSelectOption={(option) => setSelectedCategory(option)}
               />
